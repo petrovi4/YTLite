@@ -86,6 +86,12 @@ jobs:
           git checkout
           mv *.sdk $THEOS/sdks
 
+      - name: Checkout YTLite sources (for patch script)
+        uses: actions/checkout@v4
+        with:
+          path: YTLite-src
+          clean: false
+
       - name: Download YouTube Plus (by version)
         if: ${{ inputs.tweak_version != '' }}
         run: |
@@ -101,6 +107,11 @@ jobs:
             echo "::error::Validation failed: The file is not a valid DEB file. Detected type: $file_type."
             exit 1
           fi
+
+      - name: Unlock YTPlus paywall (patch _dvnLocked)
+        run: |
+          chmod +x YTLite-src/Scripts/patch_paywall.sh
+          YTLite-src/Scripts/patch_paywall.sh ytplus.deb ytplus.deb
 
       - name: Clone YouTubeHeader
         if: ${{ inputs.enable_youpip || inputs.enable_ytuhd || inputs.enable_yq || inputs.enable_ryd || inputs.enable_ytabc || inputs.enable_demc }}

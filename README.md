@@ -52,8 +52,11 @@ A flexible enhancer for YouTube on iOS, featuring over hundred customizable opti
 **Used open-source libraries are listed in the Open Source Libraries section**
 
 > [!NOTE]
-> Starting from version 5.2, YTPlus requires a subscription.  
-> The last free version is [5.2b4](https://github.com/dayanch96/YTLite/releases/tag/v5.2b4).
+> This fork builds the latest YTPlus tweak with the Patreon-subscription gate
+> stripped out. The build workflow downloads the upstream `.deb`, patches the
+> `_dvnLocked` symbol in `YTLite.dylib` to always return 0 (no feature lockout),
+> blanks the Patreon-section strings in the bundled localizations, and re-signs
+> the dylib before packaging the IPA. See [Scripts/patch_paywall.sh](Scripts/patch_paywall.sh).
 
 ## FAQ
 - [🇺🇸 English FAQ](FAQs/FAQ_EN.md)
